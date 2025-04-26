@@ -32,6 +32,7 @@ resources = {
 }
 
 def is_resource_sufficient(order_ingredients):
+    """Returns true when order can be made, False if ingredeients are insufficient."""
     for item in order_ingredients:
        if  order_ingredients[item] >= resources[item]:
            print(f"Sorry there is not enough {item}.")
@@ -47,10 +48,20 @@ def process_coins():
     total += int(input("how many pennies?: ")) * 0.01
     return total
 
+def is_transaction_successful(money_recieved, drink_cost):
+    """Return True when the payment is accepted, or False if money is insufficient"""
+    if money_recieved >= drink_cost:
+        global profit
+        profit += drink_cost
+        return True
+    else:
+        print("Sorry that's not enough money. Money refunded.")
+        return False
+
 
 
 is_on = True
-#1. Prompt user by asking "What would you like?" Inputs from Here-------
+#1. Prompt user by asking "What would you like?" Inputs from Here-----
 while(is_on):
     choice = input("What would you like? (espresso/latte/cappuccino):")
     if choice == "off":
