@@ -51,6 +51,8 @@ def process_coins():
 def is_transaction_successful(money_recieved, drink_cost):
     """Return True when the payment is accepted, or False if money is insufficient"""
     if money_recieved >= drink_cost:
+        change = round(money_recieved-drink_cost, 2)
+        print(f"Here is ${change} in change.")
         global profit
         profit += drink_cost
         return True
@@ -59,6 +61,11 @@ def is_transaction_successful(money_recieved, drink_cost):
         return False
 
 
+def make_coffee(drink_name, order_ingredients):
+    """Deduct the required ingredients from the resources."""
+    for item in order_ingredients:
+        resources[item] -= order_ingredients[item]
+    print(f"Here is your {drink_name}")
 
 is_on = True
 #1. Prompt user by asking "What would you like?" Inputs from Here-----
@@ -75,5 +82,8 @@ while(is_on):
         drink = MENU[choice]
         if is_resource_sufficient(drink["ingredients"]):
             payment = process_coins()
+            if is_transaction_successful(payment, drink["cost"]):
+                make_coffee(choice, drink["ingredients"] )
+
 
         # print(drink)
